@@ -280,8 +280,45 @@ footer{background:var(--black);color:var(--muted-light)}
 .toast{position:fixed;bottom:26px;left:50%;transform:translateX(-50%) translateY(30px);background:var(--black);color:var(--cream);padding:14px 24px;border-radius:4px;font-size:14px;z-index:120;opacity:0;transition:.3s;border-left:3px solid var(--gold);box-shadow:var(--shadow)}
 .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
 
+/* product media (real photo with SVG fallback) */
+.pmedia{width:100%;height:100%;object-fit:contain}
+.pmedia-svg{width:100%;height:auto}
+.pc-img .pmedia,.pdp-main .pmedia,.pdp-thumb .pmedia,.ci-img .pmedia{border-radius:4px}
+
+/* checkout */
+.checkout-grid{display:grid;grid-template-columns:1.3fr .9fr;gap:34px;padding:30px 0 50px;align-items:start}
+.co-card{background:#fff;border:1px solid var(--line);border-radius:8px;padding:26px;margin-bottom:22px}
+.co-card h3{font-family:var(--font-d);font-size:1.3rem;font-weight:600;margin-bottom:4px}
+.co-step{display:inline-flex;align-items:center;gap:8px;font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--gold-deep);font-weight:600;margin-bottom:14px}
+.co-step .n{width:22px;height:22px;border-radius:50%;background:var(--gold-grad);color:#231a08;display:flex;align-items:center;justify-content:center;font-size:12px}
+.pincode-row{display:flex;gap:10px}
+.pincode-row input{flex:1}
+.pay-opts{display:flex;flex-direction:column;gap:12px}
+.pay-opt{border:1.5px solid var(--line);border-radius:5px;padding:16px;cursor:pointer;transition:.2s;display:flex;gap:13px;align-items:flex-start}
+.pay-opt:hover{border-color:var(--gold)}
+.pay-opt.sel{border-color:var(--gold-deep);background:var(--cream)}
+.pay-opt input{margin-top:3px;accent-color:var(--gold-deep)}
+.pay-opt .po-t{font-weight:600;font-size:15px;display:flex;align-items:center;gap:8px}
+.pay-opt .po-d{font-size:13px;color:var(--muted);margin-top:2px}
+.po-badge{font-size:10px;background:var(--green);color:#fff;padding:2px 8px;border-radius:20px;letter-spacing:.05em;text-transform:uppercase}
+.upi-box{background:var(--cream);border:1px dashed var(--gold);border-radius:5px;padding:12px 14px;margin-top:10px;font-size:13.5px;display:none}
+.upi-box.show{display:block}
+.upi-box b{font-family:var(--font-d);font-size:1.05rem}
+.summary{position:sticky;top:96px}
+.sum-items{display:flex;flex-direction:column;gap:12px;margin:6px 0 16px}
+.sum-item{display:grid;grid-template-columns:46px 1fr auto;gap:11px;align-items:center;font-size:14px}
+.sum-item .si-img{width:46px;height:46px;border-radius:4px;background:linear-gradient(160deg,#f4ecd8,#e7dbbf);display:flex;align-items:center;justify-content:center;padding:5px;overflow:hidden}
+.sum-item .si-n{font-weight:600;font-size:13.5px}.sum-item .si-m{font-size:12px;color:var(--muted)}
+.sum-line{display:flex;justify-content:space-between;font-size:14px;padding:7px 0;color:#4a4234}
+.sum-total{display:flex;justify-content:space-between;font-family:var(--font-d);font-size:1.3rem;font-weight:600;border-top:1px solid var(--line);margin-top:8px;padding-top:14px}
+.wa-btn{background:#25D366;color:#fff}
+.wa-btn:hover{background:#1eb658}
+.co-empty{text-align:center;padding:60px 0;color:var(--muted)}
+
 /* responsive */
 @media(max-width:960px){
+  .checkout-grid{grid-template-columns:1fr}
+  .summary{position:static}
   .nav-links{display:none}
   .burger{display:flex}
   .hero-grid,.pdp,.bulk-hero,.story,.contact{grid-template-columns:1fr}
@@ -476,7 +513,7 @@ footer{background:var(--black);color:var(--muted-light)}
         </div>
       </div>
       <div class="hero-visual">
-        <div class="jar-scene">
+        <div class="jar-scene" id="heroArt">
           <div class="halo"></div>
           <svg viewBox="0 0 300 310" style="width:100%;position:relative"><use href="#art-jar"/></svg>
         </div>
@@ -592,7 +629,7 @@ footer{background:var(--black);color:var(--muted-light)}
     <div class="pdp">
       <div class="pdp-gallery">
         <div class="pdp-thumbs" id="pdpThumbs"></div>
-        <div class="pdp-main"><svg id="pdpMainArt" viewBox="0 0 300 310" style="width:100%"><use href="#art-jar"/></svg></div>
+        <div class="pdp-main" id="pdpMain"><svg viewBox="0 0 300 310" class="pmedia-svg"><use href="#art-jar"/></svg></div>
       </div>
       <div class="pdp-info">
         <h1 id="pdpName">Pure Cow Ghee</h1>
@@ -779,6 +816,59 @@ footer{background:var(--black);color:var(--muted-light)}
   </div>
 </section>
 
+<!-- ================= CHECKOUT ================= -->
+<section class="page" id="page-checkout">
+  <div class="page-hero"><div class="wrap"><h1>Checkout</h1><p>Almost there — confirm your details to place the order</p></div></div>
+  <div class="wrap">
+    <div class="crumb"><span onclick="go('home')" style="cursor:pointer">Home</span> / <span onclick="openCart()" style="cursor:pointer">Cart</span> / <b>Checkout</b></div>
+    <div id="checkoutInner">
+      <div class="checkout-grid">
+        <div>
+          <div class="co-card">
+            <div class="co-step"><span class="n">1</span> Delivery Address</div>
+            <div class="form-row">
+              <div class="field"><label>Full Name</label><input id="coName" required placeholder="Your name"></div>
+              <div class="field"><label>Phone Number</label><input id="coPhone" type="tel" required placeholder="10-digit mobile"></div>
+            </div>
+            <div class="field"><label>Pincode</label><div class="pincode-row"><input id="coPin" placeholder="e.g. 632001"><button class="btn btn-outline" type="button" onclick="checkPin()">Check</button></div><div id="pinMsg" style="font-size:12.5px;margin-top:6px"></div></div>
+            <div class="field"><label>Full Address</label><textarea id="coAddr" rows="2" required placeholder="House / street / area"></textarea></div>
+            <div class="field"><label>Landmark (optional)</label><input id="coLand" placeholder="Nearby landmark"></div>
+            <div class="form-row">
+              <div class="field"><label>City</label><input id="coCity" value="Vellore"></div>
+              <div class="field"><label>State</label><input id="coState" value="Tamil Nadu"></div>
+            </div>
+          </div>
+          <div class="co-card">
+            <div class="co-step"><span class="n">2</span> Payment Method</div>
+            <div class="pay-opts" id="payOpts">
+              <label class="pay-opt sel"><input type="radio" name="pay" value="whatsapp" checked onchange="pickPay(this)">
+                <div><div class="po-t">Order on WhatsApp <span class="po-badge">Recommended</span></div><div class="po-d">Send your order to us on WhatsApp, then pay by UPI or cash. Fastest way — we confirm personally.</div></div></label>
+              <label class="pay-opt"><input type="radio" name="pay" value="upi" onchange="pickPay(this)">
+                <div><div class="po-t">Pay by UPI (GPay · PhonePe · Paytm)</div><div class="po-d">Pay to our UPI ID and share the screenshot to confirm your order.</div>
+                  <div class="upi-box" id="upiBox">Pay to <b id="upiIdText"></b> &nbsp;·&nbsp; then tap <b>Place Order</b> to send us the payment screenshot on WhatsApp.</div></div></label>
+              <label class="pay-opt"><input type="radio" name="pay" value="cod" onchange="pickPay(this)">
+                <div><div class="po-t">Cash on Delivery</div><div class="po-d">Available in and around Vellore. Pay when your order arrives.</div></div></label>
+            </div>
+          </div>
+        </div>
+        <div class="co-card summary">
+          <h3>Order Summary</h3>
+          <div class="sum-items" id="sumItems"></div>
+          <div class="sum-line"><span>Subtotal</span><span>₹<span id="sumSub">0</span></span></div>
+          <div class="sum-line"><span>Delivery</span><span id="sumShip">Calculated on confirm</span></div>
+          <div class="sum-total"><span>Total</span><span>₹<span id="sumTotal">0</span></span></div>
+          <button class="btn wa-btn btn-block" style="margin-top:18px" onclick="placeOrder()"><svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15l-1.4 5 5.2-1.4A10 10 0 1 0 12 2zm0 18a8 8 0 0 1-4.1-1.1l-.3-.2-3 .8.8-2.9-.2-.3A8 8 0 1 1 12 20zm4.4-6c-.2-.1-1.4-.7-1.6-.8s-.4-.1-.6.1-.6.8-.8 1-.3.2-.5.1a6.5 6.5 0 0 1-3.2-2.8c-.2-.4.2-.4.6-1.2a.5.5 0 0 0 0-.5c0-.1-.6-1.5-.8-2s-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3A3 3 0 0 0 6 9.3a5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4 5.3 5.3 0 0 0 3.3.7 2.7 2.7 0 0 0 1.8-1.3 2.2 2.2 0 0 0 .2-1.3c-.1-.1-.3-.2-.5-.3z"/></svg> Place Order on WhatsApp</button>
+          <p style="text-align:center;font-size:12px;color:var(--muted);margin-top:10px">You'll be taken to WhatsApp with your order ready to send.</p>
+        </div>
+      </div>
+    </div>
+    <div class="co-empty" id="checkoutEmpty" style="display:none">
+      <p style="font-size:16px">Your cart is empty.</p>
+      <button class="btn btn-gold" style="margin-top:16px" onclick="go('shop')">Browse Products</button>
+    </div>
+  </div>
+</section>
+
 </main>
 
 <!-- ===== FOOTER ===== -->
@@ -849,15 +939,30 @@ const PRODUCTS = [
    desc:"A mixed box of our most-loved sweets — a little of everything, made fresh for your celebrations."}
 ];
 
+/* ---------- CONFIG — edit these two lines with your real details ---------- */
+const WHATSAPP="916382331149";        // RVS Agency WhatsApp (91 + number)
+const UPI_ID="rvsagency@upi";         // <-- replace with your real UPI ID
+/* Real product photos: drop files named images/<id>.jpg (e.g. images/ghee.jpg).
+   Until a file exists, the built-in vector art shows automatically. */
+PRODUCTS.forEach(p=>p.img='images/'+p.id+'.jpg');
+const HERO_IMG='images/hero.jpg';
+
 /* ---------- helpers ---------- */
 const $=s=>document.querySelector(s), $$=s=>document.querySelectorAll(s);
 const money=n=>n.toLocaleString('en-IN');
+/* render a product photo, falling back to vector art if the file is missing */
+function media(p){
+  return p.img
+    ? `<img src="${p.img}" alt="${p.name}" loading="lazy" class="pmedia" onerror="imgFallback(this,'${p.art}')">`
+    : `<svg viewBox="0 0 300 310" class="pmedia-svg"><use href="#${p.art}"/></svg>`;
+}
+function imgFallback(el,art){el.outerHTML=`<svg viewBox="0 0 300 310" class="pmedia-svg"><use href="#${art}"/></svg>`;}
 function starSVG(n){let s='';for(let i=0;i<5;i++)s+=`<svg viewBox="0 0 24 24" style="${i<n?'':'opacity:.25'}"><path d="M12 2l2.9 6.3 6.9.7-5.1 4.6 1.4 6.8L12 17.8 5.9 20.4l1.4-6.8L2.2 9l6.9-.7z"/></svg>`;return s;}
 
 /* ---------- product cards ---------- */
 function cardHTML(p){
   return `<div class="pcard">
-    <div class="pc-img" onclick="openProduct('${p.id}')">${p.tag?`<span class="pc-tag">${p.tag}</span>`:''}<svg viewBox="0 0 300 310" style="width:82%"><use href="#${p.art}"/></svg></div>
+    <div class="pc-img" onclick="openProduct('${p.id}')">${p.tag?`<span class="pc-tag">${p.tag}</span>`:''}${media(p)}</div>
     <div class="pc-body">
       <span class="pc-cat">${p.cat}</span>
       <span class="pc-name" onclick="openProduct('${p.id}')">${p.name}</span>
@@ -892,8 +997,8 @@ function openProduct(id){
   $('#pdpVariant').textContent=p.unit;
   $('#pdpStars').innerHTML=starSVG(p.rating); $('#pdpReviews').textContent=`(${p.reviews} Reviews)`;
   $('#pdpDesc').textContent=p.desc;
-  $('#pdpMainArt').innerHTML=`<use href="#${p.art}"/>`;
-  $('#pdpThumbs').innerHTML=[0,1,2,3].map(i=>`<div class="pdp-thumb ${i===0?'sel':''}"><svg viewBox="0 0 300 310"><use href="#${p.art}"/></svg></div>`).join('');
+  $('#pdpMain').innerHTML=media(p);
+  $('#pdpThumbs').innerHTML=[0,1,2,3].map(i=>`<div class="pdp-thumb ${i===0?'sel':''}">${media(p)}</div>`).join('');
   $('#pdpSizes').innerHTML=p.sizes.map((s,i)=>`<div class="size ${i===p.si?'sel':''}" onclick="pickSize(${i})">${s.l}</div>`).join('');
   $('#pdpQty').textContent=1;
   updatePdpPrice();
@@ -924,7 +1029,7 @@ function renderCart(){
   $('#cartTotal').textContent=money(total);
   if(!cart.length){$('#cartBody').innerHTML=`<div class="cart-empty"><p style="font-size:15px">Your cart is empty</p><button class="btn btn-outline" style="margin-top:16px" onclick="closeCart();go('shop')">Start Shopping</button></div>`;return;}
   $('#cartBody').innerHTML=cart.map(c=>`<div class="citem">
-    <div class="ci-img"><svg viewBox="0 0 300 310"><use href="#${c.art}"/></svg></div>
+    <div class="ci-img">${media({img:'images/'+c.id+'.jpg',art:c.art,name:c.name})}</div>
     <div><div class="ci-n">${c.name}</div><div class="ci-m">${c.size}</div>
       <div class="stepper" style="margin-top:6px;transform:scale(.82);transform-origin:left"><button onclick="changeQty('${c.key}',-1)">−</button><span>${c.qty}</span><button onclick="changeQty('${c.key}',1)">+</button></div></div>
     <div style="text-align:right"><div class="ci-p">₹${money(c.price*c.qty)}</div><div class="ci-rm" onclick="removeItem('${c.key}')" style="cursor:pointer">Remove</div></div>
@@ -932,13 +1037,61 @@ function renderCart(){
 }
 function openCart(){$('#drawer').classList.add('open');$('#overlay').classList.add('open');}
 function closeCart(){$('#drawer').classList.remove('open');$('#overlay').classList.remove('open');}
-function checkout(){if(!cart.length){toast('Your cart is empty');return;}closeCart();toast('Demo checkout — connect Razorpay to accept live payments');}
+
+/* ---------- checkout + WhatsApp order ---------- */
+function checkout(){closeCart();renderCheckout();go('checkout');}
+function renderCheckout(){
+  const has=cart.length>0;
+  $('#checkoutInner').style.display=has?'block':'none';
+  $('#checkoutEmpty').style.display=has?'none':'block';
+  if(!has)return;
+  const total=cart.reduce((a,c)=>a+c.price*c.qty,0);
+  $('#sumItems').innerHTML=cart.map(c=>`<div class="sum-item">
+    <div class="si-img">${media({img:'images/'+c.id+'.jpg',art:c.art,name:c.name})}</div>
+    <div><div class="si-n">${c.name}</div><div class="si-m">${c.size} × ${c.qty}</div></div>
+    <div style="font-weight:600">₹${money(c.price*c.qty)}</div></div>`).join('');
+  $('#sumSub').textContent=money(total);
+  $('#sumTotal').textContent=money(total);
+  $('#upiIdText').textContent=UPI_ID;
+}
+function pickPay(el){
+  $$('.pay-opt').forEach(o=>o.classList.remove('sel'));
+  el.closest('.pay-opt').classList.add('sel');
+  $('#upiBox').classList.toggle('show',el.value==='upi');
+}
+function checkPin(){
+  const v=$('#coPin').value.trim();const m=$('#pinMsg');
+  if(!/^\d{6}$/.test(v)){m.style.color='#b23b2e';m.textContent='Enter a valid 6-digit pincode';return;}
+  if(v.startsWith('63')){m.style.color='var(--green)';m.textContent='✓ Delivery available — Vellore region, same/next-day for fresh items.';}
+  else{m.style.color='var(--gold-deep)';m.textContent='✓ We deliver here by courier (ghee & dry sweets). Fresh sweets: Vellore region only.';}
+}
+function placeOrder(){
+  if(!cart.length){toast('Your cart is empty');return;}
+  const name=$('#coName').value.trim(), phone=$('#coPhone').value.trim();
+  const addr=$('#coAddr').value.trim(), pin=$('#coPin').value.trim();
+  const land=$('#coLand').value.trim(), city=$('#coCity').value.trim(), state=$('#coState').value.trim();
+  if(!name||!phone||!addr){toast('Please fill name, phone and address');return;}
+  const pay=document.querySelector('input[name="pay"]:checked').value;
+  const payLabel={whatsapp:'Confirm & pay on WhatsApp',upi:'UPI ('+UPI_ID+') — screenshot to follow',cod:'Cash on Delivery'}[pay];
+  const total=cart.reduce((a,c)=>a+c.price*c.qty,0);
+  let msg='Hello RVS Agency! I would like to place an order:\n\n';
+  cart.forEach(c=>{msg+=`• ${c.name} (${c.size}) × ${c.qty} — ₹${money(c.price*c.qty)}\n`;});
+  msg+=`\nSubtotal: ₹${money(total)}\n\n`;
+  msg+=`Name: ${name}\nPhone: ${phone}\nAddress: ${addr}${land?', '+land:''}\n${city}, ${state}${pin?' - '+pin:''}\n\n`;
+  msg+=`Payment: ${payLabel}\n\n(Sent from the RVS Agency website)`;
+  const url=`https://wa.me/${WHATSAPP}?text=${encodeURIComponent(msg)}`;
+  window.open(url,'_blank');
+  toast('Opening WhatsApp with your order…');
+}
 
 /* ---------- misc ---------- */
 function trackOrder(){const v=$('#trackId').value.trim();$('#trackSteps').style.display='flex';$('#trackHint').style.display='none';}
 function submitForm(e,msg){e.preventDefault();e.target.reset();toast(msg);}
 let toastT;
 function toast(m){const t=$('#toast');t.textContent=m;t.classList.add('show');clearTimeout(toastT);toastT=setTimeout(()=>t.classList.remove('show'),2600);}
+
+/* use hero.jpg if the file exists, otherwise keep the vector scene */
+(function(){const im=new Image();im.onload=function(){$('#heroArt').innerHTML=`<img src="${HERO_IMG}" alt="RVS Agency pure cow ghee" style="width:100%;border-radius:8px;box-shadow:var(--shadow)">`;};im.src=HERO_IMG;})();
 
 renderGrids(); renderCart();
 </script>
