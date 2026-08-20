@@ -66,19 +66,28 @@ header{position:sticky;top:0;z-index:60;background:rgba(13,12,10,.97);backdrop-f
 .cart-badge{position:absolute;top:-8px;right:-9px;background:var(--gold);color:#231a08;font-size:10px;font-weight:700;width:17px;height:17px;border-radius:50%;display:flex;align-items:center;justify-content:center}
 .burger{display:none;color:var(--cream)}
 
-/* ---------- hero ---------- */
-.hero{background:linear-gradient(120deg,var(--cream) 60%,var(--cream-2));position:relative;overflow:hidden}
-.hero::before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 78% 40%,rgba(230,196,99,.22),transparent 45%);pointer-events:none}
-.hero-grid{display:grid;grid-template-columns:1.05fr 1fr;gap:30px;align-items:center;min-height:520px;padding:40px 0 46px;position:relative}
-.hero h1{font-family:var(--font-d);font-weight:600;font-size:clamp(2.6rem,5.6vw,4.3rem);line-height:1.02;letter-spacing:-.02em;margin:16px 0 6px}
-.hero .since{font-family:var(--font-d);font-style:italic;font-size:clamp(1.4rem,3vw,2rem);color:var(--gold-deep);margin-bottom:14px}
-.hero p.sub{font-size:17px;color:var(--muted);max-width:44ch;margin-bottom:26px}
+/* ---------- hero (dark cinematic) ---------- */
+.hero{background:radial-gradient(120% 130% at 72% 38%,#3a2a10 0%,#1a140b 38%,#0d0c0a 78%);position:relative;overflow:hidden;color:var(--cream)}
+.hero::before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 74% 42%,rgba(240,200,100,.20),transparent 42%);pointer-events:none}
+.hero::after{content:"";position:absolute;left:0;right:0;bottom:0;height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent);opacity:.5}
+.hero-grid{display:grid;grid-template-columns:1.05fr 1fr;gap:30px;align-items:center;min-height:560px;padding:48px 0 54px;position:relative}
+.hero-tag{display:inline-flex;align-items:center;gap:9px;font-size:11px;letter-spacing:.24em;text-transform:uppercase;color:var(--gold-2);border:1px solid rgba(230,196,99,.35);border-radius:40px;padding:7px 15px;margin-bottom:20px}
+.hero-tag::before{content:"";width:5px;height:5px;border-radius:50%;background:var(--gold-2)}
+.hero h1{font-family:var(--font-d);font-weight:500;font-size:clamp(2.7rem,5.8vw,4.5rem);line-height:1.03;letter-spacing:-.02em;margin:4px 0 6px;color:#fbf3df}
+.hero h1 em{font-style:italic;color:var(--gold-2)}
+.hero .since{font-family:var(--font-d);font-style:italic;font-size:clamp(1.3rem,2.8vw,1.9rem);color:var(--gold-2);margin-bottom:16px}
+.hero p.sub{font-size:17px;color:#d8cbb0;max-width:46ch;margin-bottom:28px;line-height:1.65}
 .hero-cta{display:flex;gap:14px;flex-wrap:wrap}
-.hero-visual{position:relative;display:flex;align-items:center;justify-content:center;min-height:440px}
+.hero .btn-outline{color:var(--cream);border-color:rgba(230,196,99,.5)}
+.hero .btn-outline:hover{background:var(--gold-grad);color:#231a08;border-color:transparent}
+.hero-rate{display:flex;align-items:center;gap:10px;margin-top:26px;color:#cbbd9e;font-size:13.5px}
+.hero-rate .st{color:var(--gold-2);letter-spacing:2px}
+.hero-visual{position:relative;display:flex;align-items:center;justify-content:center;min-height:460px}
 
-/* ghee jar illustration */
-.jar-scene{position:relative;width:100%;max-width:440px;aspect-ratio:1/1;display:flex;align-items:center;justify-content:center}
-.halo{position:absolute;width:78%;height:78%;border-radius:50%;background:radial-gradient(circle,rgba(230,196,99,.5),rgba(230,196,99,0) 68%);filter:blur(6px)}
+/* ghee jar visual */
+.jar-scene{position:relative;width:100%;max-width:470px;aspect-ratio:1/1;display:flex;align-items:center;justify-content:center}
+.jar-scene img{width:100%;border-radius:10px}
+.halo{position:absolute;width:82%;height:82%;border-radius:50%;background:radial-gradient(circle,rgba(240,200,100,.42),rgba(240,200,100,0) 66%);filter:blur(10px)}
 
 /* trust bar */
 .trust{background:var(--black);color:var(--cream)}
@@ -110,7 +119,9 @@ header{position:sticky;top:0;z-index:60;background:rgba(13,12,10,.97);backdrop-f
 .prod-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:22px}
 .pcard{background:#fff;border:1px solid var(--line);border-radius:6px;overflow:hidden;display:flex;flex-direction:column;transition:.28s;position:relative}
 .pcard:hover{box-shadow:var(--shadow);transform:translateY(-4px);border-color:var(--gold)}
-.pcard .pc-img{aspect-ratio:1/1;background:linear-gradient(160deg,#f4ecd8,#e7dbbf);display:flex;align-items:center;justify-content:center;padding:16px;position:relative;cursor:pointer}
+.pcard .pc-img{aspect-ratio:1/1;background:linear-gradient(160deg,#f4ecd8,#e7dbbf);display:flex;align-items:center;justify-content:center;padding:16px;position:relative;cursor:pointer;overflow:hidden}
+.pcard .pc-img .pmedia,.pcard .pc-img .pmedia-svg{transition:transform .5s ease}
+.pcard:hover .pc-img .pmedia,.pcard:hover .pc-img .pmedia-svg{transform:scale(1.06)}
 .pc-tag{position:absolute;top:12px;left:12px;background:var(--black);color:var(--gold-2);font-size:10px;letter-spacing:.1em;text-transform:uppercase;font-weight:600;padding:5px 10px;border-radius:2px;z-index:2}
 .pcard .pc-body{padding:16px 16px 18px;display:flex;flex-direction:column;gap:7px;flex:1}
 .pc-cat{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold-deep);font-weight:600}
@@ -129,6 +140,17 @@ header{position:sticky;top:0;z-index:60;background:rgba(13,12,10,.97);backdrop-f
 .band h2{font-family:var(--font-d);font-size:clamp(1.7rem,3.4vw,2.4rem);font-weight:600;margin-bottom:10px}
 .band h2 em{color:var(--gold-2);font-style:italic}
 .band p{color:var(--muted-light);max-width:56ch;margin:0 auto 24px}
+
+/* testimonials */
+.testi{background:var(--paper);padding:64px 0}
+.testi-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-top:38px}
+.tcard{background:#fff;border:1px solid var(--line);border-radius:8px;padding:28px 24px;position:relative}
+.tcard .q{font-family:var(--font-d);font-size:3rem;line-height:.6;color:var(--gold);opacity:.5}
+.tcard p{font-size:15px;color:#4a4234;margin:10px 0 18px;font-style:italic}
+.tcard .who{display:flex;align-items:center;gap:12px}
+.tcard .av{width:42px;height:42px;border-radius:50%;background:var(--gold-grad);color:#231a08;display:flex;align-items:center;justify-content:center;font-family:var(--font-d);font-weight:700}
+.tcard .who b{font-size:14px}.tcard .who span{font-size:12.5px;color:var(--muted);display:block}
+.tcard .tstars{color:var(--star);font-size:13px;letter-spacing:1px;margin-bottom:2px}
 
 /* ===== app pages ===== */
 .page{display:none}
@@ -503,14 +525,15 @@ footer{background:var(--black);color:var(--muted-light)}
   <div class="hero">
     <div class="wrap hero-grid">
       <div class="hero-text">
-        <span class="eyebrow">Trust • Taste • Tradition</span>
-        <h1>Pure Ghee &amp;<br>Traditional Sweets</h1>
-        <div class="since">Since 2000</div>
-        <p class="sub">Crafted with honest ingredients and twenty-five years of customer trust — from our family kitchen in Vellore to your home.</p>
+        <span class="hero-tag">Est. 2000 · Vellore · Trust · Taste · Tradition</span>
+        <h1>Pure Ghee &amp;<br><em>Traditional Sweets</em></h1>
+        <div class="since">Made fresh, since 2000</div>
+        <p class="sub">Slow-cooked cow ghee, khova, paneer and mithai — crafted with honest ingredients and twenty-five years of trust, from our family kitchen in Vellore to your home.</p>
         <div class="hero-cta">
           <button class="btn btn-gold" onclick="go('shop')">Shop Now</button>
-          <button class="btn btn-outline" onclick="go('bulk')">Bulk Orders</button>
+          <button class="btn btn-outline" onclick="go('bulk')">Bulk &amp; Event Orders</button>
         </div>
+        <div class="hero-rate"><span class="st">★★★★★</span> Trusted by <b style="color:#efe2c4">10,000+</b> families across Tamil Nadu</div>
       </div>
       <div class="hero-visual">
         <div class="jar-scene" id="heroArt">
@@ -572,6 +595,18 @@ footer{background:var(--black);color:var(--muted-light)}
       </div>
       <div class="prod-grid" id="bestGrid"></div>
       <div style="text-align:center;margin-top:36px"><button class="btn btn-outline" onclick="go('shop')">View All Products</button></div>
+    </div>
+  </div>
+
+  <!-- testimonials -->
+  <div class="testi">
+    <div class="wrap">
+      <div class="sec-head"><span class="eyebrow">Why families choose us</span><h2>Loved across Tamil Nadu</h2><div class="divider"></div></div>
+      <div class="testi-grid">
+        <div class="tcard"><div class="q">&ldquo;</div><div class="tstars">★★★★★</div><p>Exactly like home-made — the aroma of the ghee fills the whole kitchen. We've been buying for years.</p><div class="who"><span class="av">L</span><div><b>Lakshmi R.</b><span>Vellore</span></div></div></div>
+        <div class="tcard"><div class="q">&ldquo;</div><div class="tstars">★★★★★</div><p>Ordered for a 300-guest family function — every tub of khova, block of paneer and jar of ghee arrived fresh and on time.</p><div class="who"><span class="av">R</span><div><b>Ramesh K.</b><span>Katpadi</span></div></div></div>
+        <div class="tcard"><div class="q">&ldquo;</div><div class="tstars">★★★★★</div><p>The Mysore pak and kaju katli are just right — soft, fresh and not too sweet. My festival order every year.</p><div class="who"><span class="av">S</span><div><b>Saranya M.</b><span>Vellore</span></div></div></div>
+      </div>
     </div>
   </div>
 
